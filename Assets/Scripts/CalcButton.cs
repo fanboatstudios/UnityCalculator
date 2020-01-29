@@ -3,23 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CalcButton : MonoBehaviour
+
+namespace com.fanboatstudios.unitycalculator
 {
-    public Text label;
-
-    void Start()
+    public class CalcButton : MonoBehaviour
     {
-        
-    }
+        [SerializeField] Text label;
 
-    // Update is called once per frame÷
-    void Update()
-    {
-        
-    }
+        private Manager calcManager;
 
-    public void onTapped()
-    {
-        Debug.Log($"Tapped: {label.text}");
+        private void Awake()
+        {
+            calcManager = GetComponentInParent<Manager>();
+        }
+
+        public void OnTapped()
+        {
+            Debug.Log($"Tapped: {label.text}");
+            if (label.text == "OFF")
+            {
+                Manager.PowerOff();
+            }
+            else
+            {
+                calcManager.ButtonTapped(label.text[0]);
+            }
+        }
     }
 }
